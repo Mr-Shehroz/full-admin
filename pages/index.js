@@ -3,6 +3,7 @@ import { Users, Package, Clipboard } from "lucide-react";
 import { useSession } from "next-auth/react";
 import connect from "@/lib/mongoose";
 import mongoose from "mongoose";
+import Link from "next/link";
 
 export default function Dashboard({ totalUsers, totalProducts, pendingOrders }) {
   const { data: session } = useSession();
@@ -55,12 +56,20 @@ export default function Dashboard({ totalUsers, totalProducts, pendingOrders }) 
             <div className="bg-[#0f766e] p-6 rounded-lg shadow-md text-white">
               <h3 className="text-xl font-semibold">Manage Products</h3>
               <p className="mt-2">Add, edit, or remove products.</p>
-              <a href="/products" className="mt-4 inline-block bg-white text-[#0f766e] px-4 py-2 rounded-md hover:bg-[#14b8a6] transition duration-300">Go to Products</a>
+              <Link href="/products" passHref>
+                <span className="mt-4 inline-block bg-white text-[#0f766e] px-4 py-2 rounded-md hover:bg-[#14b8a6] transition duration-300 cursor-pointer">
+                  Go to Products
+                </span>
+              </Link>
             </div>
             <div className="bg-[#0f766e] p-6 rounded-lg shadow-md text-white">
               <h3 className="text-xl font-semibold">View Orders</h3>
               <p className="mt-2">See the latest orders placed on your store.</p>
-              <a href="/orders" className="mt-4 inline-block bg-white text-[#0f766e] px-4 py-2 rounded-md hover:bg-[#14b8a6] transition duration-300">Go to Orders</a>
+              <Link href="/orders" passHref>
+                <span className="mt-4 inline-block bg-white text-[#0f766e] px-4 py-2 rounded-md hover:bg-[#14b8a6] transition duration-300 cursor-pointer">
+                  Go to Orders
+                </span>
+              </Link>
             </div>
           </div>
         </div>
@@ -82,7 +91,6 @@ export async function getServerSideProps() {
   const productsCollection = db.collection('products');
   const totalProducts = await productsCollection.countDocuments();
 
-  // Assuming you have an "orders" collection with a "status" field for pending orders
   const ordersCollection = db.collection('orders');
   const pendingOrders = await ordersCollection.countDocuments({ status: "pending" });
 

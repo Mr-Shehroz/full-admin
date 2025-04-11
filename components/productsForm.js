@@ -4,6 +4,7 @@ import axios from "axios";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
+import Image from "next/image";
 
 export default function ProductForm() {
   const [products, setProducts] = useState([]);
@@ -33,12 +34,14 @@ export default function ProductForm() {
             key={i}
             className="bg-white p-6 rounded shadow text-[#333] text-center space-y-4"
           >
-            <div className="w-full h-48 bg-gray-100 rounded flex items-center justify-center overflow-hidden">
+            <div className="w-full h-48 bg-gray-100 rounded flex items-center justify-center overflow-hidden relative">
               {product.images?.length > 0 ? (
-                <img
+                <Image
                   src={product.images[0]}
                   alt={product.title}
-                  className="max-h-full object-contain"
+                  width={200}
+                  height={200}
+                  className="object-contain"
                 />
               ) : (
                 <span className="text-lg text-gray-500">No Image</span>
@@ -51,14 +54,12 @@ export default function ProductForm() {
               <div className="text-lg italic text-[#0d6e6b]">
                 <p>{product.category.categoryName}</p>
 
-                {/* Display parent category if it exists */}
                 {product.category.parent && (
                   <p className="text-sm text-[#6b7280]">
                     Parent Category: {product.category.parent.categoryName}
                   </p>
                 )}
 
-                {/* Display properties of the category if available */}
                 {product.category.properties?.length > 0 && (
                   <ul className="list-disc pl-6 text-sm text-[#6b7280]">
                     {product.category.properties.map((property, idx) => (

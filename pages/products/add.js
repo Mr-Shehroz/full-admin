@@ -4,29 +4,28 @@ import Layout from "@/components/layout";
 import axios from "axios";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
+import Image from "next/image";
 
-export default function AddProductForm({ 
-  title: existingTitle, 
-  description: existingDescription, 
-  price: existingPrice, 
-  _id, 
-  images: existingImages, 
-  category: assignedCategory 
-  
+export default function AddProductForm({
+  title: existingTitle,
+  description: existingDescription,
+  price: existingPrice,
+  _id,
+  images: existingImages,
+  category: assignedCategory,
 }) {
   const [title, setTitle] = useState(existingTitle || "");
   const [description, setDescription] = useState(existingDescription || "");
   const [price, setPrice] = useState(existingPrice || "");
   const [images, setImages] = useState(existingImages || []);
-  const [categories, setCategories] = useState([]); // Initialize as an empty array
-  const [category, setCategory] = useState(assignedCategory || ""); // Use the existing category if provided
-  const [categoryDetails, setCategoryDetails] = useState(null); // Store category details (properties, parent)
+  const [categories, setCategories] = useState([]);
+  const [category, setCategory] = useState(assignedCategory || "");
+  const [categoryDetails, setCategoryDetails] = useState(null);
   const router = useRouter();
 
   useEffect(() => {
     axios.get("/api/categories")
       .then(res => {
-        // Ensure the response is an array before setting state
         if (Array.isArray(res.data)) {
           setCategories(res.data);
         } else {
@@ -38,7 +37,6 @@ export default function AddProductForm({
 
   useEffect(() => {
     if (category) {
-      // Fetch details of the selected category
       const selectedCategory = categories.find((cat) => cat._id === category);
       setCategoryDetails(selectedCategory);
     }
@@ -84,6 +82,7 @@ export default function AddProductForm({
         <form onSubmit={saveProduct}>
           <div className="bg-white p-4 rounded-lg shadow space-y-4">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              {/* Title Input */}
               <label className="flex flex-col gap-1">
                 <span className="text-sm text-gray-600">Title</span>
                 <input
@@ -95,6 +94,7 @@ export default function AddProductForm({
                 />
               </label>
 
+              {/* Price Input */}
               <label className="flex flex-col gap-1">
                 <span className="text-sm text-gray-600">Price</span>
                 <input
@@ -107,6 +107,7 @@ export default function AddProductForm({
               </label>
             </div>
 
+            {/* Category Select */}
             <label className="flex flex-col gap-1">
               <span className="text-sm text-gray-600">Category</span>
               <select
@@ -123,7 +124,7 @@ export default function AddProductForm({
               </select>
             </label>
 
-            {/* Parent Category Section */}
+            {/* Parent Category Info */}
             {categoryDetails?.parent && (
               <div className="bg-teal-100 p-4 rounded-lg border border-teal-200 mt-4">
                 <h3 className="text-sm font-semibold text-teal-600">Parent Category</h3>
@@ -131,7 +132,7 @@ export default function AddProductForm({
               </div>
             )}
 
-            {/* Properties Section */}
+            {/* Properties */}
             {categoryDetails?.properties?.length > 0 && (
               <div className="bg-teal-100 p-4 rounded-lg border border-teal-200 mt-4">
                 <h3 className="text-sm font-semibold text-teal-600">Properties</h3>
@@ -145,6 +146,7 @@ export default function AddProductForm({
               </div>
             )}
 
+            {/* Description */}
             <label className="flex flex-col gap-1">
               <span className="text-sm text-gray-600">Description</span>
               <textarea
@@ -156,6 +158,7 @@ export default function AddProductForm({
               />
             </label>
 
+            {/* Upload Images */}
             <label className="flex flex-col gap-1">
               <span className="text-sm text-gray-600">Upload Images</span>
               <span className="bg-[#14b8a6] hover:bg-[#0f766e] text-white text-sm px-3 py-1 rounded cursor-pointer w-fit transition">
@@ -169,14 +172,16 @@ export default function AddProductForm({
               </span>
             </label>
 
+            {/* Image Previews */}
             {images.length > 0 && (
               <div className="grid grid-cols-3 gap-2">
                 {images.map((url, i) => (
-                  <div key={i} className="w-full h-32 bg-gray-100 rounded flex items-center justify-center overflow-hidden">
-                    <img
+                  <div key={i} className="relative w-full h-32 bg-gray-100 rounded overflow-hidden">
+                    <Image
                       src={url}
                       alt={`Product image ${i + 1}`}
-                      className="w-full h-full object-contain"
+                      fill
+                      className="object-contain"
                     />
                   </div>
                 ))}
