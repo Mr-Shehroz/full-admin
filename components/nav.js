@@ -13,10 +13,13 @@ import {
 import { useState } from 'react'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
+import { useRouter } from 'next/router'
+
 
 export default function Sidebar() {
   const [isOpen, setIsOpen] = useState(false)
   const pathname = usePathname()
+  const router = useRouter()
 
   const navItems = [
     { name: 'Dashboard', icon: <LayoutDashboard size={18} />, href: '/' },
@@ -25,6 +28,10 @@ export default function Sidebar() {
     { name: 'Orders', icon: <Clipboard size={18} />, href: '/orders' },
     { name: 'Settings', icon: <Settings size={18} />, href: '/settings' },
   ]
+  async function logOut () {
+    await signOut()
+    await router.push('/')
+  }
 
   return (
     <>
@@ -65,7 +72,7 @@ export default function Sidebar() {
             )
           })}
           <button
-            onClick={() => signOut()}
+            onClick={logOut}
             className="w-full mt-6 text-left bg-red-500 hover:bg-red-600 px-3 py-2 rounded font-medium transition"
           >
             Logout
