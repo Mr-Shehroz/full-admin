@@ -18,8 +18,8 @@ export default function ProductForm() {
 
   return (
     <div className="p-6">
-      <div className="flex items-center justify-between mb-6">
-        <h2 className="text-2xl font-semibold text-[#0d6e6b]">Products</h2>
+      <div className="flex flex-col mt-10 md:flex-row md:mt-0 items-center justify-between mb-6">
+        <h2 className="text-3xl font-semibold pb-4 md:pb-0 text-[#0d6e6b]">Products</h2>
         <Link
           href="/products/add"
           className="bg-[#14b8a6] hover:bg-[#0f766e] text-white px-5 py-3 rounded transition font-medium"

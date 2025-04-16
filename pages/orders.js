@@ -43,81 +43,42 @@ export default function OrdersPage() {
 
   return (
     <Layout>
-    <div style={{ fontFamily: "'Arial', sans-serif", margin: "20px" }}>
-      <h1 style={{ color: "#0f766e", fontSize: "2rem", marginBottom: "20px" }}>Orders</h1>
-      {orders.length === 0 ? (
-        <p style={{ color: "#0f766e", fontSize: "1.2rem" }}>No orders found.</p>
-      ) : (
-        <table
-          style={{
-            width: "100%",
-            borderCollapse: "collapse",
-            boxShadow: "0 4px 6px rgba(0, 0, 0, 0.1)",
-            marginBottom: "20px",
-          }}
-        >
-          <thead>
-            <tr style={{ backgroundColor: "#f1f1f1" }}>
-              <th style={{ padding: "12px", textAlign: "left", color: "#0f766e", border: "1px solid #ddd" }}>
-                Customer Name
-              </th>
-              <th style={{ padding: "12px", textAlign: "left", color: "#0f766e", border: "1px solid #ddd" }}>
-                Email
-              </th>
-              <th style={{ padding: "12px", textAlign: "left", color: "#0f766e", border: "1px solid #ddd" }}>
-                Products
-              </th>
-              <th style={{ padding: "12px", textAlign: "left", color: "#0f766e", border: "1px solid #ddd" }}>
-                Total Amount
-              </th>
-              <th style={{ padding: "12px", textAlign: "left", color: "#0f766e", border: "1px solid #ddd" }}>
-                Status
-              </th>
-              <th style={{ padding: "12px", textAlign: "left", color: "#0f766e", border: "1px solid #ddd" }}>
-                Created At
-              </th>
-            </tr>
-          </thead>
-          <tbody>
+      <div className="font-sans p-5 mt-10 md:mt-0">
+        <h1 className="text-2xl text-teal-600 mb-5">Orders</h1>
+        {orders.length === 0 ? (
+          <p className="text-teal-600 text-lg">No orders found.</p>
+        ) : (
+          <div className="space-y-6">
             {orders.map((order) => (
-              <tr key={order._id} style={{ backgroundColor: "#fff" }}>
-                <td style={{ padding: "12px", color: "#333", border: "1px solid #ddd" }}>
-                  {order.customerName}
-                </td>
-                <td style={{ padding: "12px", color: "#333", border: "1px solid #ddd" }}>
-                  {order.email}
-                </td>
-                <td style={{ padding: "12px", color: "#333", border: "1px solid #ddd" }}>
+              <div key={order._id} className="border p-4 rounded-lg shadow-md bg-white">
+                <h2 className="text-xl font-semibold text-teal-600">{order.customerName}</h2>
+                <p className="text-gray-700">Email: {order.email}</p>
+                <div className="my-4">
+                  <h3 className="font-medium text-teal-600">Products:</h3>
                   {order.products.map((product, index) => (
-                    <div key={index}>
+                    <div key={index} className="text-gray-700">
                       {product.productId.title} - Quantity: {product.quantity}
                     </div>
                   ))}
-                </td>
-                <td style={{ padding: "12px", color: "#333", border: "1px solid #ddd" }}>
-                  ${order.totalAmount}
-                </td>
-                <td style={{ padding: "12px", color: "#333", border: "1px solid #ddd" }}>
+                </div>
+                <div className="flex items-center justify-between">
+                  <p className="text-lg font-bold text-teal-600">${order.totalAmount}</p>
                   <span
-                    style={{
-                      backgroundColor: order.status === "Shipped" ? "#4caf50" : "#ff9800",
-                      color: "#fff",
-                      padding: "5px 10px",
-                      borderRadius: "4px",
-                    }}
+                    className={`inline-block px-3 py-1 text-white rounded-full ${
+                      order.status === "Shipped" ? "bg-green-500" : "bg-yellow-500"
+                    }`}
                   >
                     {order.status}
                   </span>
-                </td>
-                <td style={{ padding: "12px", color: "#333", border: "1px solid #ddd" }}>
-                  {new Date(order.createdAt).toLocaleString()}
-                </td>
-              </tr>
+                </div>
+                <p className="text-gray-500 mt-2">
+                  Created at: {new Date(order.createdAt).toLocaleString()}
+                </p>
+              </div>
             ))}
-          </tbody>
-        </table>
-      )}
-    </div>
+          </div>
+        )}
+      </div>
     </Layout>
   );
 }

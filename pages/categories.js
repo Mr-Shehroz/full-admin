@@ -49,124 +49,59 @@ export default function CategoriesPage() {
 
   return (
     <Layout>
-      <div style={{ fontFamily: "'Arial', sans-serif", margin: "20px" }}>
-        <h1 style={{ color: "#0f766e", fontSize: "2rem", marginBottom: "20px" }}>
-          Categories
-        </h1>
+      <div className="p-4 sm:p-6 font-sans mt-10 md:mt-0">
+        <div className="flex justify-between items-center mb-6 flex-wrap gap-4">
+          <h1 className="text-2xl sm:text-3xl font-semibold text-[#0f766e]">Categories</h1>
+          <Link href="/categories/add">
+            <button className="bg-[#0f766e] hover:bg-[#0c5f59] text-white px-5 py-2 rounded">
+              Add New Category
+            </button>
+          </Link>
+        </div>
 
         {loading ? (
-          <p style={{ fontSize: "1.2rem", color: "#666" }}>Loading categories...</p>
+          <p className="text-base sm:text-lg text-gray-600">Loading categories...</p>
+        ) : categories.length === 0 ? (
+          <p className="text-base text-gray-500">No categories found.</p>
         ) : (
-          <table
-            style={{
-              width: "100%",
-              borderCollapse: "collapse",
-              boxShadow: "0 4px 6px rgba(0, 0, 0, 0.1)",
-              marginBottom: "20px",
-            }}
-          >
-            <thead>
-              <tr style={{ backgroundColor: "#f1f1f1" }}>
-                <th
-                  style={{
-                    padding: "12px",
-                    textAlign: "left",
-                    color: "#0f766e",
-                    border: "1px solid #ddd",
-                  }}
-                >
-                  Category Name
-                </th>
-                <th
-                  style={{
-                    padding: "12px",
-                    textAlign: "left",
-                    color: "#0f766e",
-                    border: "1px solid #ddd",
-                  }}
-                >
-                  Parent Category
-                </th>
-                <th
-                  style={{
-                    padding: "12px",
-                    textAlign: "left",
-                    color: "#0f766e",
-                    border: "1px solid #ddd",
-                  }}
-                >
-                  Properties
-                </th>
-                <th
-                  style={{
-                    padding: "12px",
-                    textAlign: "left",
-                    color: "#0f766e",
-                    border: "1px solid #ddd",
-                  }}
-                >
-                  Actions
-                </th>
-              </tr>
-            </thead>
-            <tbody>
-              {categories.map((category) => (
-                <tr key={category._id} style={{ backgroundColor: "#fff" }}>
-                  <td style={{ padding: "12px", color: "#333", border: "1px solid #ddd" }}>
-                    {category.categoryName}
-                  </td>
-                  <td style={{ padding: "12px", color: "#333", border: "1px solid #ddd" }}>
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+            {categories.map((category) => (
+              <div
+                key={category._id}
+                className="bg-white border border-gray-200 shadow-sm rounded-lg p-4 flex flex-col justify-between"
+              >
+                <div>
+                  <h2 className="text-lg font-bold text-[#0f766e]">{category.categoryName}</h2>
+                  <p className="text-sm text-gray-600 mt-1">
+                    <span className="font-medium">Parent:</span>{" "}
                     {category.parent ? category.parent.categoryName : "No Parent"}
-                  </td>
-                  <td style={{ padding: "12px", color: "#333", border: "1px solid #ddd" }}>
+                  </p>
+                  <div className="mt-3">
+                    <p className="font-medium text-gray-700 mb-1">Properties:</p>
                     {category.properties.length > 0 ? (
-                      <ul>
-                        {category.properties.map((property, index) => (
-                          <li key={index} style={{ color: "#555" }}>
-                            <strong>{property.name}:</strong> {property.value}
+                      <ul className="list-disc pl-5 text-sm text-gray-600">
+                        {category.properties.map((prop, index) => (
+                          <li key={index}>
+                            <strong>{prop.name}:</strong> {prop.value}
                           </li>
                         ))}
                       </ul>
                     ) : (
-                      "No Properties"
+                      <p className="text-sm text-gray-500">No properties</p>
                     )}
-                  </td>
-                  <td style={{ padding: "12px", border: "1px solid #ddd" }}>
-                    <button
-                      onClick={() => handleDelete(category._id)}
-                      style={{
-                        padding: "6px 10px",
-                        backgroundColor: "#dc2626",
-                        color: "#fff",
-                        border: "none",
-                        cursor: "pointer",
-                        borderRadius: "4px",
-                      }}
-                    >
-                      Delete
-                    </button>
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        )}
+                  </div>
+                </div>
 
-        <Link href="/categories/add">
-          <button
-            style={{
-              padding: "8px 12px",
-              backgroundColor: "#0f766e",
-              color: "#fff",
-              border: "none",
-              cursor: "pointer",
-              marginTop: "20px",
-              borderRadius: "4px",
-            }}
-          >
-            Add New Category
-          </button>
-        </Link>
+                <button
+                  onClick={() => handleDelete(category._id)}
+                  className="mt-4 bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded text-sm"
+                >
+                  Delete
+                </button>
+              </div>
+            ))}
+          </div>
+        )}
       </div>
     </Layout>
   );

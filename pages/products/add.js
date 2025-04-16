@@ -77,7 +77,7 @@ export default function AddProductForm({
 
   return (
     <Layout>
-      <div className="p-4">
+      <div className="p-4 mt-10 md:mt-0">
         <h1 className="text-2xl font-semibold text-[#0f766e] mb-4">{_id ? "Edit Product" : "Add Product"}</h1>
         <form onSubmit={saveProduct}>
           <div className="bg-white p-4 rounded-lg shadow space-y-4">

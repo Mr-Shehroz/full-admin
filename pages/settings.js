@@ -25,87 +25,48 @@ export default function SettingsPage() {
 
   return (
     <Layout>
-      <div style={{ fontFamily: "'Arial', sans-serif", margin: "20px", backgroundColor: "white", padding: "20px", borderRadius: "8px" }}>
-        <h1 style={{ color: "#0f766e", fontSize: "2rem", marginBottom: "20px" }}>Settings</h1>
+      <div className="bg-white p-6 rounded-lg shadow-lg max-w-4xl mx-auto mt-10">
+        <h1 className="text-3xl text-teal-600 font-semibold mb-6">Settings</h1>
         
         {error && (
-          <p style={{ color: "red", fontSize: "1.2rem" }}>
-            {error}
-          </p>
+          <p className="text-red-500 text-lg mb-4">{error}</p>
         )}
         
-        <div style={{ marginBottom: "20px" }}>
-          <label style={{ color: "#333", fontSize: "1.2rem", marginBottom: "10px", display: "block" }}>
-            Username:
-          </label>
+        <div className="mb-6">
+          <label className="block text-lg text-gray-800 mb-2">Username:</label>
           <input
             type="text"
             placeholder="Enter your username"
             value={username}
             onChange={(e) => setUsername(e.target.value)}
-            style={{
-              padding: "8px",
-              marginRight: "10px",
-              width: "300px",
-              marginBottom: "20px",
-              color: "#333",  // Dark text color for better contrast
-              backgroundColor: "#fff",  // White background for inputs
-              border: "1px solid #0f766e", // Border with the theme color
-              borderRadius: "4px",
-            }}
+            className="w-full p-3 border border-teal-600 rounded-md text-gray-700 focus:outline-none focus:ring-2 focus:ring-teal-500"
           />
         </div>
 
-        <div style={{ marginBottom: "20px" }}>
-          <label style={{ color: "#333", fontSize: "1.2rem", marginBottom: "10px", display: "block" }}>
-            Email:
-          </label>
+        <div className="mb-6">
+          <label className="block text-lg text-gray-800 mb-2">Email:</label>
           <input
             type="email"
             placeholder="Enter your email"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
-            style={{
-              padding: "8px",
-              marginRight: "10px",
-              width: "300px",
-              marginBottom: "20px",
-              color: "#333",  // Dark text color for better contrast
-              backgroundColor: "#fff",  // White background for inputs
-              border: "1px solid #0f766e", // Border with the theme color
-              borderRadius: "4px",
-            }}
+            className="w-full p-3 border border-teal-600 rounded-md text-gray-700 focus:outline-none focus:ring-2 focus:ring-teal-500"
           />
         </div>
 
-        <div style={{ marginBottom: "20px" }}>
-          <label style={{ color: "#333", fontSize: "1.2rem", marginBottom: "10px", display: "block" }}>
-            Theme Color:
-          </label>
+        <div className="mb-6">
+          <label className="block text-lg text-gray-800 mb-2">Theme Color:</label>
           <input
             type="color"
             value={themeColor}
             onChange={(e) => setThemeColor(e.target.value)}
-            style={{
-              padding: "8px",
-              marginRight: "10px",
-              width: "60px",
-              marginBottom: "20px",
-              border: "1px solid #0f766e", // Border with the theme color
-              borderRadius: "4px",
-            }}
+            className="w-16 h-10 border border-teal-600 rounded-md focus:outline-none"
           />
         </div>
 
         <button
           onClick={handleSave}
-          style={{
-            padding: "8px 12px",
-            backgroundColor: "#0f766e",  // Button background color
-            color: "#fff",  // Button text color
-            border: "1px solid #0f766e",  // Border with the theme color
-            cursor: "pointer",
-          }}
+          className="w-full p-3 bg-teal-600 text-white rounded-md font-semibold hover:bg-teal-700 focus:outline-none focus:ring-2 focus:ring-teal-500"
         >
           Save Settings
         </button>
